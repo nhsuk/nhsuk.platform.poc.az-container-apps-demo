@@ -10,6 +10,7 @@ resource "azurerm_subnet" "app_subnet" {
   resource_group_name  = var.resource_group_name
   virtual_network_name = azurerm_virtual_network.vnet.name
   address_prefixes     = var.app_subnet_address_prefixes
+  service_endpoints    = ["Microsoft.KeyVault"]
 }
 
 resource "azurerm_subnet" "db_subnet" {

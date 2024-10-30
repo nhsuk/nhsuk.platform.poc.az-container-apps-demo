@@ -13,7 +13,7 @@ resource "azurerm_container_app" "container_app" {
   revision_mode                = "Single"
 
   depends_on = [
-    null_resource.acr_deployment,
+    null_resource.acr_image_deployment,
     azurerm_role_assignment.acr_pull
   ]
 
@@ -32,17 +32,17 @@ resource "azurerm_container_app" "container_app" {
     }
   }
 
-  #   secret {
-  #     name                = "secret-postgresql-admin-username"
-  #     identity            = "System"
-  #     key_vault_secret_id = azurerm_key_vault_secret.postgresql_admin_username.id
-  #   }
+  # secret {
+  #   name                = "secret-postgresql-admin-username"
+  #   identity            = azurerm_user_assigned_identity.identity.id
+  #   key_vault_secret_id = azurerm_key_vault_secret.postgresql_admin_username.id
+  # }
 
-  #   secret {
-  #     name                = "secret-postgresql-admin-password"
-  #     identity            = "System"
-  #     key_vault_secret_id = azurerm_key_vault_secret.postgresql_admin_password.id
-  #   }
+  # secret {
+  #   name                = "secret-postgresql-admin-password"
+  #   identity            = azurerm_user_assigned_identity.identity.id
+  #   key_vault_secret_id = azurerm_key_vault_secret.postgresql_admin_password.id
+  # }
 
   registry {
     server   = azurerm_container_registry.acr.login_server

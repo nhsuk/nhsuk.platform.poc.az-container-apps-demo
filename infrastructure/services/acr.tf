@@ -33,7 +33,7 @@ resource "azurerm_private_endpoint" "acr_private_endpoint" {
   }
 }
 
-resource "null_resource" "container_deployment" {
+resource "null_resource" "acr_deployment" {
   triggers = {
     // Below will build and push the docker image every time the terraform is applied
     always_run = "${timestamp()}"

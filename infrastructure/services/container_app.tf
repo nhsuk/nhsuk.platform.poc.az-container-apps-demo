@@ -13,8 +13,8 @@ resource "azurerm_container_app" "container_app" {
   revision_mode                = "Single"
 
   depends_on = [
-    null_resource.container_deployment,
-    azurerm_role_assignment.identity_acr_pull
+    null_resource.acr_deployment,
+    azurerm_role_assignment.acr_pull
   ]
 
   identity {

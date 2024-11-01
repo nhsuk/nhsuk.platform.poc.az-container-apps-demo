@@ -35,17 +35,17 @@ resource "azurerm_container_app" "container_app" {
     }
   }
 
-  # secret {
-  #   name                = "secret-postgresql-admin-username"
-  #   identity            = azurerm_user_assigned_identity.identity.id
-  #   key_vault_secret_id = azurerm_key_vault_secret.postgresql_admin_username.id
-  # }
+  secret {
+    name                = "secret-postgresql-admin-username"
+    identity            = azurerm_user_assigned_identity.identity.id
+    key_vault_secret_id = azurerm_key_vault_secret.postgresql_admin_username.id
+  }
 
-  # secret {
-  #   name                = "secret-postgresql-admin-password"
-  #   identity            = azurerm_user_assigned_identity.identity.id
-  #   key_vault_secret_id = azurerm_key_vault_secret.postgresql_admin_password.id
-  # }
+  secret {
+    name                = "secret-postgresql-admin-password"
+    identity            = azurerm_user_assigned_identity.identity.id
+    key_vault_secret_id = azurerm_key_vault_secret.postgresql_admin_password.id
+  }
 
   registry {
     server   = azurerm_container_registry.acr.login_server
@@ -59,25 +59,25 @@ resource "azurerm_container_app" "container_app" {
       cpu    = "0.5"
       memory = "1Gi"
 
-      #   env {
-      #     name  = "POSTGRES_HOST"
-      #     value = azurerm_postgresql_flexible_server.postgresql_server.fqdn
-      #   }
+      env {
+        name  = "POSTGRES_HOST"
+        value = azurerm_postgresql_flexible_server.postgresql_server.fqdn
+      }
 
-      #   env {
-      #     name  = "POSTGRES_DATABASE"
-      #     value = azurerm_postgresql_flexible_server_database.postgresql_database.name
-      #   }
+      env {
+        name  = "POSTGRES_DATABASE"
+        value = azurerm_postgresql_flexible_server_database.postgresql_database.name
+      }
 
-      #   env {
-      #     name        = "POSTGRES_USER"
-      #     secret_name = "secret-postgresql-admin-username"
-      #   }
+      env {
+        name        = "POSTGRES_USER"
+        secret_name = "secret-postgresql-admin-username"
+      }
 
-      #   env {
-      #     name        = "POSTGRES_PASSWORD"
-      #     secret_name = "secret-postgresql-admin-password"
-      #   }
+      env {
+        name        = "POSTGRES_PASSWORD"
+        secret_name = "secret-postgresql-admin-password"
+      }
     }
   }
 }

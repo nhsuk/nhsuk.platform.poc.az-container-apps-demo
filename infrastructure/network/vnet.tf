@@ -5,6 +5,13 @@ resource "azurerm_virtual_network" "vnet" {
   resource_group_name = var.resource_group_name
 }
 
+resource "azurerm_subnet" "gateway_subnet" {
+  name                 = "snet-${var.app_name}-gateway"
+  resource_group_name  = var.resource_group_name
+  virtual_network_name = azurerm_virtual_network.vnet.name
+  address_prefixes     = var.gateway_subnet_address_prefixes
+}
+
 resource "azurerm_subnet" "app_subnet" {
   name                 = "snet-${var.app_name}-app"
   resource_group_name  = var.resource_group_name

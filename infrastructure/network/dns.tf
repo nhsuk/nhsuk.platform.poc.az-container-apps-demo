@@ -33,3 +33,15 @@ resource "azurerm_private_dns_zone_virtual_network_link" "postgresql_dns_zone_vn
   private_dns_zone_name = azurerm_private_dns_zone.postgresql_dns_zone.name
   virtual_network_id    = azurerm_virtual_network.vnet.id
 }
+
+resource "azurerm_private_dns_zone" "container_apps_dns_zone" {
+  name                = "azurecontainerapps.io"
+  resource_group_name = var.resource_group_name
+}
+
+resource "azurerm_private_dns_zone_virtual_network_link" "container_apps_dns_zone_vnet_link" {
+  name                  = "dns-link-${var.app_name}-ca"
+  resource_group_name   = var.resource_group_name
+  private_dns_zone_name = azurerm_private_dns_zone.container_apps_dns_zone.name
+  virtual_network_id    = azurerm_virtual_network.vnet.id
+}

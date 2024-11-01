@@ -26,6 +26,10 @@ variable "vnet" {
   type = any
 }
 
+variable "gateway_subnet" {
+  type = any
+}
+
 variable "app_subnet" {
   type = any
 }
@@ -47,6 +51,10 @@ variable "key_vault_dns_zone" {
 }
 
 variable "postgresql_dns_zone" {
+  type = any
+}
+
+variable "container_apps_dns_zone" {
   type = any
 }
 

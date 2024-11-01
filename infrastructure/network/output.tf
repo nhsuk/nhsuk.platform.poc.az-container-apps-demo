@@ -2,6 +2,10 @@ output "vnet" {
   value = azurerm_virtual_network.vnet
 }
 
+output "gateway_subnet" {
+  value = azurerm_subnet.gateway_subnet
+}
+
 output "app_subnet" {
   value = azurerm_subnet.app_subnet
 }
@@ -24,4 +28,8 @@ output "key_vault_dns_zone" {
 
 output "postgresql_dns_zone" {
   value = azurerm_private_dns_zone.postgresql_dns_zone
+}
+
+output "container_apps_dns_zone" {
+  value = azurerm_private_dns_zone.container_apps_dns_zone
 }

@@ -20,7 +20,7 @@ resource "azurerm_key_vault_access_policy" "deployment_user_access" {
   key_vault_id       = azurerm_key_vault.key_vault.id
   tenant_id          = var.tenant_id
   object_id          = var.deployment_client_id
-  secret_permissions = ["Get", "List", "Set"]
+  secret_permissions = ["Get", "List", "Set", "Delete", "Purge", "Recover"]
 }
 
 resource "azurerm_key_vault_access_policy" "managed_identity_access" {

@@ -25,7 +25,10 @@ resource "azurerm_container_app" "container_app" {
   }
 
   ingress {
-    target_port = 80
+    external_enabled = true
+    transport        = "tcp"
+    target_port      = 80
+    exposed_port     = 8080
     traffic_weight {
       latest_revision = true
       percentage      = 100
@@ -77,4 +80,12 @@ resource "azurerm_container_app" "container_app" {
       #   }
     }
   }
+}
+
+resource "azurerm_private_dns_a_record" "container_app_environment_dns_a_record" {
+  name                = "*.${replace(azurerm_container_app_environment.container_app_environment.default_domain, ".azurecontainerapps.io", "")}"
+  zone_name           = var.container_apps_dns_zone.name
+  resource_group_name = var.resource_group_name
+  ttl                 = 10
+  records             = [azurerm_container_app_environment.container_app_environment.static_ip_address]
 }

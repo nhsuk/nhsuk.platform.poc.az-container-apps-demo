@@ -14,6 +14,10 @@ variable "vnet_address_space" {
   type = list(string)
 }
 
+variable "gateway_subnet_address_prefixes" {
+  type = list(string)
+}
+
 variable "app_subnet_address_prefixes" {
   type = list(string)
 }

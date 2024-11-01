@@ -13,19 +13,24 @@ variable "vnet_address_space" {
   default = ["172.16.0.0/16"]
 }
 
-variable "app_subnet_address_prefixes" {
+variable "gateway_subnet_address_prefixes" {
   type    = list(string)
   default = ["172.16.0.0/18"]
 }
 
-variable "db_subnet_address_prefixes" {
+variable "app_subnet_address_prefixes" {
   type    = list(string)
   default = ["172.16.64.0/18"]
 }
 
-variable "services_subnet_address_prefixes" {
+variable "db_subnet_address_prefixes" {
   type    = list(string)
   default = ["172.16.128.0/18"]
+}
+
+variable "services_subnet_address_prefixes" {
+  type    = list(string)
+  default = ["172.16.192.0/18"]
 }
 
 variable "container_app_image" {

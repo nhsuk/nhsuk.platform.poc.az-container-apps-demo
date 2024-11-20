@@ -36,14 +36,14 @@ resource "azurerm_private_endpoint" "acr_private_endpoint" {
 resource "null_resource" "acr_image_deployment" {
   triggers = {
     // Below will build and push the docker image every time the terraform is applied
-    always_run = "${timestamp()}"
+    // always_run = "${timestamp()}"
 
     // Below will build and push the docker image when something has changed 
-    //on_docker_image_changed = sha256(join("", [for f in fileset(".", "../tools/test-app/**") : file(f)]))
+    on_docker_image_changed = sha256(join("", [for f in fileset(".", "../tools/hello-world-app/**") : file(f)]))
   }
 
   provisioner "local-exec" {
-    working_dir = "../tools/test-app"
+    working_dir = "../tools/hello-world-app"
     interpreter = ["powershell", "-Command"]
     command     = <<EOT
       docker login ${azurerm_container_registry.acr.login_server} -u ${azurerm_container_registry.acr.admin_username} -p ${azurerm_container_registry.acr.admin_password};

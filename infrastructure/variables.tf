@@ -35,7 +35,7 @@ variable "services_subnet_address_prefixes" {
 
 variable "container_app_image" {
   type    = string
-  default = "mycontainerapp:latest"
+  default = "helloworldapp:latest"
 }
 
 variable "postgresql_admin_username" {

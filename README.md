@@ -10,13 +10,6 @@ This repository demonstrates a container-based application deployed to Azure Con
 
 We'll also implement an application gateway to allow external access to the private container app through a single endpoint.
 
-## Pre-Requisites
-
-The following are pre-reqs to working with the solution:
-
-- Terraform installed
-- Docker installed
-
 ## Design
 
 The following diagram illustrates the high level design of the solution:
@@ -40,3 +33,43 @@ The following diagram illustrates the high level design of the solution:
 **7.** A private Azure Container Registry will be created, and an image for a dummy nginx web application (which can be found in the `./tools` directory) which is used by the container app will be pushed when the terraform is deployed.
 
 **8.** The diagnostics produced by the app gateway are sent to a log analytics workspace for debugging and tracing.
+
+## Usage
+
+### Pre-Requisites
+
+The following are pre-reqs to working with the solution:
+
+- Windows environment (sorry Linux folk, PowerShell is currently used to run terminal commands)
+- Terraform installed
+- Docker installed
+- An Azure subscription with the `Microsoft.App` resource provider registered (required for container apps)
+- An Azure identity (e.g. service principal) with the following roles assigned at the subscription level:
+    - `Contributor` (to create resources)
+    - `AcrPush` (to push the container image of the hello world app to the ACR)
+    - `RBAC Administrator` constrained to the following roles:
+        - `AcrPull`
+
+### Deployment
+
+To deploy the solution, open a terminal and navigate to the `./infrastructure` directory.
+
+Initialise terraform with the following command:
+
+```pwsh
+terraform init
+```
+
+Then apply the terraform with the following command:
+
+```pwsh
+terraform apply -auto-approve
+```
+
+### Known Issues
+
+The following are known issues in the demo, which should be considered when using this it for something beyond a proof of concept:
+
+- A firewall rule allowing traffic from the IP of the deployment agent (e.g. your IP) is created on various private resources to allow the terraform deployment to complete its tasks. The firewall rule should be removed after deployment, or alternatively run the deployment from an Azure agent that can access the private network.
+
+- You may have certain policies in place that this module is not aware of which will cause the deployment to fail - e.g. mandatory tags. It is down to you to amend the code to adhere to the policies.

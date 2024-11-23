@@ -1,5 +1,12 @@
+resource "random_string" "key_vault_id" {
+  length  = 4
+  special = false
+  numeric = false
+  upper   = false
+}
+
 resource "azurerm_key_vault" "key_vault" {
-  name                = "kv-${var.app_name}"
+  name                = "kv-${var.app_name}-${random_string.key_vault_id.result}"
   location            = var.location
   resource_group_name = var.resource_group_name
   tenant_id           = var.tenant_id

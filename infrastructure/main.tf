@@ -5,8 +5,6 @@ terraform {
       version = "4.3.0"
     }
   }
-
-  backend "azurerm" {}
 }
 
 provider "azurerm" {
@@ -21,7 +19,7 @@ provider "azurerm" {
 data "azurerm_client_config" "current" {}
 
 data "external" "deployment_ip" {
-  program = ["bash", "-c", "curl -s 'https://api.ipify.org?format=json'"]
+  program = ["powershell", "-Command", "Invoke-RestMethod -Uri 'https://api.ipify.org?format=json' | ConvertTo-Json"]
 }
 
 resource "azurerm_resource_group" "resource_group" {
